@@ -6,7 +6,7 @@
 
 
 
-{% for blog in blogs %}
+{% for blog in blogs[:5] %}
   <div class="blog">
     <div class="blog-title">{{ blog.title }}</div>
     <div class="blog-body">{{ blog.body }}</div>

@@ -51,6 +51,9 @@ def blogPopulate():
     entry = Blog(title=title1, body=body1)
     entry.put()
 
+def blogUnPopulate():
+    return
+
 class MainPage(Handler):
     # """
     # Builds the homepage
@@ -94,8 +97,14 @@ class NewPost(Handler):
             self.render_newpost(title, body, error)
 
 
+class ViewPostHandler(webapp2.RequestHandler):
+    def get(self, id):
+        pass #replace this with some code to handle the request
+
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/newpost', NewPost)
+    ('/newpost', NewPost),
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
 ], debug=True)
+    #webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
