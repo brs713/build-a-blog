@@ -1,0 +1,67 @@
+<</blog>>
+_________________
+
+
+
+    /BLOG/
+
+
+    First Post Title                          | --> link to post detail screen
+
+      this is the first post
+
+
+    Second Post Title                          | --> link to post detail screen
+
+      this is the second post
+
+
+    Third Post Title                          | --> link to post detail screen
+
+      this is the third post
+
+
+    Fourth Post Title                          | --> link to post detail screen
+
+      this is the fourth post
+
+
+    Fifth Post Title                          | --> link to post detail screen
+
+      this is the fifth post
+
+
+  [__Blog Me!__]                             | --> button redirects to '/newpost')
+
+
+_________________
+<</newpost>>
+_________________
+
+
+  /BLOG/
+
+
+  "title"
+  |______________________________|           | --> input name="title"
+
+  "body"
+  |                              |
+  |                              |
+  |______________________________|           | --> textarea name="body"
+
+  {hidden error msg <div>}
+
+  [__Blog Me!__]                             | --> input type="submit" (redirects to '/blog')
+
+
+
+
+
+___
+
+
+First, set up the blog so that the <<new post form>> and the <<post listing>> are on the
+same page, as with AsciiChan, and then separate those portions into separate
+routes, handler classes, and templates. For now, when a user submits a new post,
+redirect them to the main blog page.

@@ -4,13 +4,16 @@
 
 <hr>
 
-{% for blog in Blogs %}
+
+
+{% for blog in blogs %}
   <div class="blog">
     <div class="blog-title">{{ blog.title }}</div>
     <div class="blog-body">{{ blog.body }}</div>
   </div>
 {% endfor %}
-<a href="/.."><button></a>
+<hr>
+<a href="/newpost">Link?</a>
 
 <!-- <form method="post">
   <label>

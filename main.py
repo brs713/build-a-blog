@@ -44,6 +44,12 @@ class Blog(db.Model):
     body = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
 
+#TestData
+def blogPopulate():
+    title1="some_string"
+    body1="this is some body text that represents a blog post"
+    entry = Blog(title=title1, body=body1)
+    entry.put()
 
 class MainPage(Handler):
     # """
@@ -52,13 +58,27 @@ class MainPage(Handler):
     #     - has an area for text & title input
     #     - has a submit button that redirects to /newpost page
     # """
-
-    def render_home(self, title="", body="", error=""):
-        #blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC")
-        self.render("home.html", title=title, body=body, error=error)
+    def render_home(self, blog=""):
+        blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC")
+        self.render("blog_list.html", blogs=blogs)
+        #blogs = db.GqlQuery("SELECT * FROM Blog")
 
     def get(self):
+        #self.redirect('/')
         self.render_home()
+
+    def post(self):
+        #self.redirect('/')
+        self.render_home()
+
+
+class NewPost(Handler):
+
+    def render_newpost(self, title="", body="", error=""):
+        self.render("newpost_detail.html", title=title, body=body, error=error)
+
+    def get(self):
+        self.render_newpost()
 
     def post(self):
         title = self.request.get("title")
@@ -71,8 +91,11 @@ class MainPage(Handler):
             self.redirect("/")
         else:
             error = "Please enter a valid title & body."
-            self.render_home(title, body, error)
+            self.render_newpost(title, body, error)
+
+
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage)
+    ('/', MainPage),
+    ('/newpost', NewPost)
 ], debug=True)
