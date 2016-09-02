@@ -62,17 +62,41 @@ class MainPage(Handler):
     #     - has a submit button that redirects to /newpost page
     # """
     def render_home(self, blog=""):
-        blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC")
+        blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT 5")
+        blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT 5")
         self.render("blog_list.html", blogs=blogs)
-        #blogs = db.GqlQuery("SELECT * FROM Blog")
 
     def get(self):
-        #self.redirect('/')
         self.render_home()
 
-    def post(self):
-        #self.redirect('/')
-        self.render_home()
+    # def post(self):
+    #     self.render_home()
+
+
+class SinglePostHandler(Handler):
+    # def get(self, id):
+    #     id = 893289;
+    #     self.response.write(id)
+
+    def render_single_post(self, postnum=id):
+        #postnum = int(postnum)
+        entry = Blog.get_by_id(int(postnum))
+
+        #TODO:  ***Figure out why the following line errors***
+        #entry = cgi.escape(entry)
+
+        self.render("single_post.html", entry=entry)
+
+    def get(self, id):
+        self.render_single_post(id)
+
+    #TODO:  Should this redirect upon...what?  Submission?  Are there other buttons here?
+    # Hacker edition specs show a Home | New Post set of links @ top of every page.
+    # So I guess we have no need to post here; it never will - commenting out.
+    # def post(self):
+    #     #self.redirect('/')
+    #     self.render_single_post()
+
 
 
 class NewPost(Handler):
@@ -97,14 +121,9 @@ class NewPost(Handler):
             self.render_newpost(title, body, error)
 
 
-class ViewPostHandler(webapp2.RequestHandler):
-    def get(self, id):
-        pass #replace this with some code to handle the request
-
-
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/newpost', NewPost),
-    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
+    webapp2.Route('/blog/<id:\d+>', SinglePostHandler)
 ], debug=True)
     #webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
