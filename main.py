@@ -61,12 +61,13 @@ class MainPage(Handler):
     #     - has an area for text & title input
     #     - has a submit button that redirects to /newpost page
     # """
-    def render_home(self, blog=""):
-        blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT 5")
+    def render_home(self, blog=Blog):
         blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT 5")
         self.render("blog_list.html", blogs=blogs)
 
     def get(self):
+        # for i in range(0,11):
+        #     blogPopulate()
         self.render_home()
 
     # def post(self):
@@ -74,16 +75,9 @@ class MainPage(Handler):
 
 
 class SinglePostHandler(Handler):
-    # def get(self, id):
-    #     id = 893289;
-    #     self.response.write(id)
 
-    def render_single_post(self, postnum=id):
-        #postnum = int(postnum)
-        entry = Blog.get_by_id(int(postnum))
-
-        #TODO:  ***Figure out why the following line errors***
-        #entry = cgi.escape(entry)
+    def render_single_post(self, post_id=id):
+        entry = Blog.get_by_id(int(post_id))
 
         self.render("single_post.html", entry=entry)
 
@@ -97,8 +91,6 @@ class SinglePostHandler(Handler):
     #     #self.redirect('/')
     #     self.render_single_post()
 
-
-
 class NewPost(Handler):
 
     def render_newpost(self, title="", body="", error=""):
@@ -111,7 +103,7 @@ class NewPost(Handler):
         title = self.request.get("title")
         body = self.request.get("body")
 
-        #TODO Fix this - make it an appropriate self.redirect()...
+        #*Done* TO-DO Fix this - make it an appropriate self.redirect()...
         if title and body:
             entry = Blog(title = title, body = body)
             entry.put()
