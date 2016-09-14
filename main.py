@@ -27,6 +27,12 @@ template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                 autoescape = True)
 
+def get_posts(limit, offset):
+    blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT %s OFFSET %s" % (limit, offset))
+    #db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT %s OFFSET %s" % limit, offset)
+    return blogs
+
+
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
@@ -62,10 +68,10 @@ class MainPage(Handler):
     #     - has a submit button that redirects to /newpost page
     # """
     def render_home(self, blog=Blog):
-        blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT 5")
+        blogs = get_posts(7, 0)
         self.render("blog_list.html", blogs=blogs)
 
-    def get(self):
+    def get(self, page=""):
         # for i in range(0,11):
         #     blogPopulate()
         self.render_home()

@@ -1,0 +1,121 @@
+body {
+  font-family: sans-serif;
+  width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.error {
+  color: red;
+  margin: 30px 20px;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+}
+
+input[type=text] {
+  width: 400px;
+  font-size: 20px;
+  padding: 2px;
+}
+
+textarea {
+  width: 400px;
+  height: 200px;
+  font-size: 17px;
+  font-family: monospace;
+}
+
+input[type=submit] {
+  font-size: 24px;
+}
+
+hr {
+  margin: 20px auto;
+}
+
+.blog + .blog {
+  margin-top: 10px;
+}
+
+.blog-title {
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.blog-body {
+  margin: 0;
+  font-size: 17px;
+  padding-left: 30px;
+}
+
+.nav {
+  display: inline-block;
+}
+
+h3.nav {
+  float: right;
+  margin: 40px 20px 0 0;
+}
+
+
+/*__Original unlinked css file__*/
+
+/*h1 {
+  align-content: center;
+}
+
+
+body {
+  font-family: sans-serif;
+  width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.error {
+  color: red;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+}
+
+input[type=text] {
+  width: 400px;
+  font-size: 20px;
+  padding: 2px;
+}
+
+textarea {
+  width: 400px;
+  height: 200px;
+  font-size: 17px;
+  font-family: monospace;
+}
+
+input[type=submit] {
+  font-size: 24px;
+}
+
+hr {
+  margin: 20px auto;
+}
+
+.blog + .blog {
+  margin-top: 10px;
+}
+
+.blog-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.blog-body {
+  margin: 0;
+  font-size: 17px;
+}*/

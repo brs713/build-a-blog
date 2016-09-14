@@ -1,80 +1,27 @@
 <!DOCTYPE html>
+
 <html>
+
   <head>
+
     <title>build-a-blog</title>
-    <style type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
-      body {
-        font-family: sans-serif;
-        width: 800px;
-        margin: 0 auto;
-        padding: 10px;
-      }
-
-      .error {
-        color: red;
-        margin: 30px 20px;
-      }
-
-      label {
-        display: block;
-        font-size: 20px;
-      }
-
-      input[type=text] {
-        width: 400px;
-        font-size: 20px;
-        padding: 2px;
-      }
-
-      textarea {
-        width: 400px;
-        height: 200px;
-        font-size: 17px;
-        font-family: monospace;
-      }
-
-      input[type=submit] {
-        font-size: 24px;
-      }
-
-      hr {
-        margin: 20px auto;
-      }
-
-      .blog + .blog {
-        margin-top: 10px;
-      }
-
-      .blog-title {
-        font-weight: bold;
-        font-size: 20px;
-        padding-left: 20px;
-      }
-
-      .blog-body {
-        margin: 0;
-        font-size: 17px;
-        padding-left: 30px;
-      }
-
-    </style>
   </head>
   <body>
-    <h1>
+    <h1 class="nav">
       <a href="/">/blog/</a>
     </h1>
-    <br>
+    <h3 class="nav">
+      <a href="/newpost">new post</a>
+    </h2>
     <hr>
 
     {% block content %}
     {% endblock %}
 
     <hr>
-    <br>
-    <h2>
-      <a href="/newpost">new post</a>
-    </h2>
+
 
   </body>
 </html>
