@@ -27,6 +27,7 @@ template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                 autoescape = True)
 
+""" returns requested number & offset db.Query object of posts from the Blog db """
 def get_posts(limit, offset):
     blogs = db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT %s OFFSET %s" % (limit, offset))
     #db.GqlQuery("SELECT * FROM Blog ORDER BY created DESC LIMIT %s OFFSET %s" % limit, offset)
@@ -51,8 +52,8 @@ class Blog(db.Model):
     created = db.DateTimeProperty(auto_now_add = True)
 
 #TestData
-def blogPopulate():
-    title1="some_string"
+def blogPopulate(specificator):
+    title1="Post #" + str(specificator)
     body1="this is some body text that represents a blog post"
     entry = Blog(title=title1, body=body1)
     entry.put()
@@ -68,16 +69,56 @@ class MainPage(Handler):
     #     - has a submit button that redirects to /newpost page
     # """
     def render_home(self, blog=Blog):
-        blogs = get_posts(7, 0)
-        self.render("blog_list.html", blogs=blogs)
+
+        page = self.request.get("page")
+        if not page:
+            page = 1
+        else:
+            page = int(page)
+
+        #Sets max number of posts displayed; calculates the offset
+        limit = 5
+        offset = page * limit - 5
+
+        #get the posts
+        blogs = get_posts(limit, offset)
+
+        #count them
+        num_posts = blogs.count()
+
+        #initialize next & prev flags
+        nxt = False
+        prv = False
+
+        #if there are enough posts for multiple pages...
+        if num_posts > limit:
+
+            #...and if the total number of posts is greater than the set being displayed...
+            if num_posts > (page * limit):
+
+                #...there should be a next button present.
+                nxt = True
+
+            #if we're on page 2 or greater...
+            if page > 1:
+
+                #...there should be a prev button.
+                prv = True
+
+        #render the page
+        self.render("blog_list.html", blogs=blogs,
+                                    page=page,
+                                    nxt=nxt,
+                                    prv=prv,
+                                    num_posts=num_posts) #num_posts included for testing
 
     def get(self, page=""):
-        # for i in range(0,11):
-        #     blogPopulate()
-        self.render_home()
 
-    # def post(self):
-    #     self.render_home()
+        """ DATA POPULATION """
+        # for i in range(0,11):
+        #     blogPopulate(i)
+
+        self.render_home()
 
 
 class SinglePostHandler(Handler):
@@ -113,15 +154,16 @@ class NewPost(Handler):
         if title and body:
             entry = Blog(title = title, body = body)
             entry.put()
-            self.redirect("/")
+            self.redirect("/blog")
         else:
             error = "Please enter a valid title & body."
             self.render_newpost(title, body, error)
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage),
+    ('/blog', MainPage),
     ('/newpost', NewPost),
-    webapp2.Route('/blog/<id:\d+>', SinglePostHandler)
+    webapp2.Route('/blog/<id:\d+>', SinglePostHandler),
+    webapp2.Route('/blog?page=<page:\d>', MainPage),
+    ('/', MainPage)
 ], debug=True)
-    #webapp2.Route('/blog/<id:\d+>', ViewPostHandler)

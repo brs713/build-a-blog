@@ -12,4 +12,16 @@
   <br>
 {% endfor %}
 
+<hr>
+
+{% if prv %}
+<span><a href="/blog?page={{ page - 1 }}">prev</a></span>
+{% endif %}
+
+{% if nxt %}
+<span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/blog?page={{ page + 1 }}">next</a></span>
+{% endif %}
+
+
+
 {% endblock %}
